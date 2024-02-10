@@ -1,0 +1,39 @@
+{
+    "name": "kicklivebot",
+    "version": "1.0.0",
+    "description": "Discord bot to send kick notifications",
+    "main": "index.ts",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "tsc": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/LoneCoder21/KickLive.git"
+    },
+    "keywords": [
+        "discord",
+        "kick",
+        "stream",
+        "bot"
+    ],
+    "author": "Abhinav Neelam <abhinavneelam949@gmail.com> (https://github.com/LoneCoder21)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/LoneCoder21/KickLive/issues"
+    },
+    "homepage": "https://github.com/LoneCoder21/KickLive#readme",
+    "dependencies": {
+        "@types/node": "^20.11.17",
+        "discord.js": "^14.14.1",
+        "pusher": "^5.2.0"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.21.0",
+        "@typescript-eslint/parser": "^6.21.0",
+        "eslint": "^8.56.0",
+        "prettier": "3.2.5",
+        "typescript": "^5.3.3"
+    }
+}
