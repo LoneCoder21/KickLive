@@ -1,1 +1,2 @@
-console.log(3);
+const j: number = "";
+console.log(j);
