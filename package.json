@@ -2,13 +2,13 @@
     "name": "kicklivebot",
     "version": "1.0.0",
     "description": "Discord bot to send kick notifications",
-    "main": "index.ts",
+    "main": "src/index.ts",
     "type": "module",
     "scripts": {
-        "build": "esbuild index.ts --bundle --minify --platform=node --target=node12 --outdir=dist",
+        "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node12 --outdir=dist",
         "start": "node dist/index.js",
-        "tsc": "tsc",
-        "format": "prettier --write \"src/**/*.ts\""
+        "format": "prettier --write \"src/**/*.ts\"",
+        "lint": "tsc --noEmit && eslint **/*.ts *.*"
     },
     "repository": {
         "type": "git",
@@ -32,6 +32,7 @@
         "pusher-js": "^8.4.0-rc2"
     },
     "devDependencies": {
+        "@eslint/eslintrc": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
         "esbuild": "0.20.0",
