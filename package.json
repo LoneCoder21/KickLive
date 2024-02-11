@@ -4,11 +4,15 @@
     "description": "Discord bot to send kick notifications",
     "main": "src/index.ts",
     "type": "module",
+    "files": [
+        "dist/*"
+    ],
     "scripts": {
         "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node12 --outdir=dist",
         "start": "node dist/index.js",
         "format": "prettier --write \"src/**/*.ts\"",
-        "lint": "tsc --noEmit && eslint **/*.ts *.*"
+        "lint": "tsc --noEmit && eslint **/*.ts *.*",
+        "build-start": "npm run build && npm run start"
     },
     "repository": {
         "type": "git",
