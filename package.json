@@ -5,9 +5,10 @@
     "main": "index.ts",
     "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "esbuild index.ts --bundle --minify --platform=node --target=node12 --outdir=dist",
+        "start": "node dist/index.js",
         "tsc": "tsc",
-        "build": "esbuild index.ts --bundle --minify --platform=node --target=node12 --outdir=dist"
+        "format": "prettier --write \"src/**/*.ts\""
     },
     "repository": {
         "type": "git",
@@ -36,6 +37,7 @@
         "esbuild": "0.20.0",
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
+        "globals": "^14.0.0",
         "prettier": "3.2.5",
         "typescript": "^5.3.3"
     }
