@@ -1,0 +1,7 @@
+{
+    "watch": ["src"],
+    "ignore": ["dist/*"],
+    "verbose": true,
+    "ext": "ts",
+    "exec": "npm restart"
+}

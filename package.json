@@ -10,11 +10,12 @@
     "scripts": {
         "build": "esbuild src/index.ts --minify --platform=node --outfile=dist/app.js",
         "bundle": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/app_bundle.js",
+        "prerestart": "npm run build",
         "start": "node dist/app.js",
-        "watch": "esbuild src/index.ts --watch --platform=node --outfile=dist/app_watch.js",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tsc --noEmit && eslint **/*.ts *.*",
-        "build-start": "npm run build && npm run start"
+        "build-start": "npm run build && npm run start",
+        "dev": "nodemon"
     },
     "repository": {
         "type": "git",
@@ -45,6 +46,7 @@
         "eslint": "^8.56.0",
         "eslint-config-prettier": "^9.1.0",
         "globals": "^14.0.0",
+        "nodemon": "^3.0.3",
         "prettier": "3.2.5",
         "typescript": "^5.3.3"
     }
