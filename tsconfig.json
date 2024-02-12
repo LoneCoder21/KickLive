@@ -11,7 +11,7 @@
         "module": "NodeNext",
         "isolatedModules": true,
         "outDir": "dist/",
-        "moduleResolution": "nodenext"
+        "moduleResolution": "NodeNext"
     },
     "includes": ["src/**/*"]
 }

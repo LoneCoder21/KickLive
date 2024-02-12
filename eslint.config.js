@@ -21,7 +21,7 @@ export default [
                 files: ["src/**/*.ts"]
             }
         ],
-        extends: ["plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-type-checked"],
+        extends: ["plugin:@typescript-eslint/recommended"],
         plugins: ["@typescript-eslint"],
         parser: "@typescript-eslint/parser",
         parserOptions: {

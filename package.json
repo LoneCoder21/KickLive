@@ -8,8 +8,10 @@
         "dist/*"
     ],
     "scripts": {
-        "build": "esbuild src/index.ts --bundle --minify --platform=node --target=node12 --outdir=dist",
-        "start": "node dist/index.js",
+        "build": "esbuild src/index.ts --minify --platform=node --outfile=dist/app.js",
+        "bundle": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/app_bundle.js",
+        "start": "node dist/app.js",
+        "watch": "esbuild src/index.ts --watch --platform=node --outfile=dist/app_watch.js",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tsc --noEmit && eslint **/*.ts *.*",
         "build-start": "npm run build && npm run start"

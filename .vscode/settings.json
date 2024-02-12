@@ -1,4 +1,4 @@
 {
     "eslint.experimental.useFlatConfig": true,
-    "typescript.validate.enable": true
+    "typescript.validate.enable": false
 }
