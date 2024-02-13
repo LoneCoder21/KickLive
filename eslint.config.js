@@ -28,6 +28,9 @@ export default [
             project: true,
             tsconfigRootDir: __dirname
         },
+        rules: {
+            "@typescript-eslint/no-explicit-any": "off"
+        },
         ignorePatterns: ["**/**.js"],
         root: true
     }),
