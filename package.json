@@ -35,6 +35,7 @@
     "homepage": "https://github.com/LoneCoder21/KickLive#readme",
     "dependencies": {
         "@types/node": "^20.11.17",
+        "axios": "^1.6.7",
         "discord.js": "^14.14.1",
         "pusher-js": "^8.4.0-rc2"
     },
