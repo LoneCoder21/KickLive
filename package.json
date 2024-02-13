@@ -37,6 +37,7 @@
         "@types/node": "^20.11.17",
         "axios": "^1.6.7",
         "discord.js": "^14.14.1",
+        "dotenv": "^16.4.3",
         "pusher-js": "^8.4.0-rc2"
     },
     "devDependencies": {

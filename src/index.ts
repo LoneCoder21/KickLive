@@ -1,6 +1,8 @@
 import Pusher from "pusher-js";
 import axios from "axios";
+import "dotenv/config";
 import { Livestream } from "./Livestream.js";
+import { Client, GatewayIntentBits } from "discord.js";
 
 const useragent =
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0";
@@ -30,7 +32,6 @@ async function getToken(name: string): string | undefined {
                 const tokenwithparams = f.split("=")[1];
                 const encodedtoken = tokenwithparams.split(";")[0];
                 const decodedtoken = decodeURIComponent(encodedtoken);
-                console.log(decodedtoken);
                 return decodedtoken;
             }
         }
@@ -56,6 +57,9 @@ async function getChatRoomId(name: string): number | undefined {
     return undefined;
 }
 
+const token = process.env.token;
+const channelId = "1205701785365512282";
+
 async function setupPusher(name: string) {
     const id = await getChatRoomId(name);
     const pusher = new Pusher("eb1d5f283081a78b932c", {
@@ -68,9 +72,18 @@ async function setupPusher(name: string) {
         console.log(err);
     });
 
+    const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+
+    await client.login(token);
+
+    await client.once("ready", () => {});
+
+    const discord_channel = await client.channels.cache.get(channelId);
+
     channel.bind("App\\Events\\StreamerIsLive", (data: Livestream) => {
-        console.log(data);
+        if (!client.isReady) return;
+        discord_channel.send(`${name} - live right now at https://kick.com/${name} - ${data.session_title}`);
     });
 }
 
-setupPusher("xqc");
+setupPusher("destiny");
