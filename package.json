@@ -2,14 +2,13 @@
     "name": "kicklivebot",
     "version": "1.0.0",
     "description": "Discord bot to send kick notifications",
-    "main": "src/index.ts",
+    "main": "src/app.ts",
     "type": "module",
     "files": [
         "dist/*"
     ],
     "scripts": {
-        "build": "esbuild src/index.ts --minify --platform=node --outfile=dist/app.js",
-        "bundle": "esbuild src/index.ts --bundle --minify --platform=node --outfile=dist/app_bundle.js",
+        "build": "esbuild src/app.ts --bundle --format=esm --platform=node --outdir=dist --external:discord.js --external:pusher-js --external:axios --external:dotenv/config",
         "prerestart": "npm run build",
         "start": "node dist/app.js",
         "format": "prettier --write \"src/**/*.ts\"",
