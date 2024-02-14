@@ -12,7 +12,7 @@ const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl", "sliker"];
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const buttons = [];
-    list = list.slice(0, 25);
+
     for (const streamer of list) {
         const button = new ButtonBuilder()
             .setLabel(streamer)
