@@ -1,7 +1,9 @@
-import { SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
 export function execute(interaction: ChatInputCommandInteraction) {
-    interaction.reply("Watch");
+    const streamer = interaction.options.getString("streamer");
+
+    interaction.reply(`Now watching ${streamer} for live events! 😊`);
 }
 
 export const command_string = new SlashCommandBuilder()
@@ -11,3 +13,5 @@ export const command_string = new SlashCommandBuilder()
         option.setRequired(true).setName("streamer").setDescription("The name of the streamer")
     )
     .toJSON();
+
+// TODO - Add image to embed of profile streamer pic
