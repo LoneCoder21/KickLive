@@ -15,15 +15,15 @@ import axios from "axios";
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
 
-    const res = await axios.get(`https://api.kick.com/private/v1/channels/${streamer}`, {
+    const res = await axios.get(`https://kick.com/api/v2/channels/${streamer}`, {
         headers: headers
     });
-    const user: User = res.data.data.account.user;
+    const user: User = res.data.user;
 
     const embed = new EmbedBuilder()
         .setColor(0x00ff7f)
-        .setAuthor({ name: streamer, iconURL: user.profile_picture, url: `https://kick.com/${streamer}` })
-        .setThumbnail(user.profile_picture)
+        .setAuthor({ name: streamer, iconURL: user.profile_pic, url: `https://kick.com/${streamer}` })
+        .setThumbnail(user.profile_pic)
         .setDescription(`Now watching ${streamer} for live events! 😊`);
 
     const github = new ButtonBuilder()

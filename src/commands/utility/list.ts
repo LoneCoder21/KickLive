@@ -12,20 +12,20 @@ import { User } from "../../types/User.js";
 import { headers } from "../../constants/headers.js";
 import axios from "axios";
 
-const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl", "odablock", "nickmercs", "sliker"];
+const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl"];
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const embeds = [];
 
     for (const streamer of list) {
-        const res = await axios.get(`https://api.kick.com/private/v1/channels/${streamer}`, {
+        const res = await axios.get(`https://kick.com/api/v2/channels/${streamer}`, {
             headers: headers
         });
-        const user: User = res.data.data.account.user;
+        const user: User = res.data.user;
         console.log(user);
         const embed = new EmbedBuilder()
             .setColor(0x00ff7f)
-            .setAuthor({ name: streamer, iconURL: user.profile_picture, url: `https://kick.com/${streamer}` });
+            .setAuthor({ name: streamer, iconURL: user.profile_pic, url: `https://kick.com/${streamer}` });
 
         embeds.push(embed);
     }
