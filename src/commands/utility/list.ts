@@ -1,7 +1,43 @@
-import { SlashCommandBuilder } from "discord.js";
+import {
+    ButtonStyle,
+    ButtonBuilder,
+    EmbedBuilder,
+    SlashCommandBuilder,
+    ChatInputCommandInteraction,
+    ActionRowBuilder,
+    ChatInputCommandInteraction,
+    SlashCommandBuilder
+} from "discord.js";
+import { User } from "../../types/User.js";
+import { headers } from "../../constants/headers.js";
+import axios from "axios";
 
-export function execute(interaction: ChatInputCommandInteraction) {
-    interaction.reply("List");
+const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl", "odablock", "nickmercs", "sliker"];
+
+export async function execute(interaction: ChatInputCommandInteraction) {
+    const embeds = [];
+
+    for (const streamer of list) {
+        const res = await axios.get(`https://api.kick.com/private/v1/channels/${streamer}`, {
+            headers: headers
+        });
+        const user: User = res.data.data.account.user;
+        console.log(user);
+        const embed = new EmbedBuilder()
+            .setColor(0x00ff7f)
+            .setAuthor({ name: streamer, iconURL: user.profile_picture, url: `https://kick.com/${streamer}` });
+
+        embeds.push(embed);
+    }
+
+    const github = new ButtonBuilder()
+        .setLabel("GitHub")
+        .setURL("https://github.com/LoneCoder21/KickLive")
+        .setStyle(ButtonStyle.Link);
+
+    const row = new ActionRowBuilder().addComponents(github);
+
+    interaction.reply({ embeds: embeds, components: [row] });
 }
 
 export const command_string = new SlashCommandBuilder()

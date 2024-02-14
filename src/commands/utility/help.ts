@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 
 export function execute(interaction: ChatInputCommandInteraction) {
-    const exampleEmbed = new EmbedBuilder()
+    const embed = new EmbedBuilder()
         .setColor(0x00ff7f)
         .setTitle("Commands")
         .setAuthor({ name: "KickLive", iconURL: "https://i.imgur.com/AfFp7pu.png", url: "https://discord.js.org" })
@@ -28,7 +28,7 @@ export function execute(interaction: ChatInputCommandInteraction) {
 
     const row = new ActionRowBuilder().addComponents(github);
 
-    interaction.reply({ content: "Help", embeds: [exampleEmbed], components: [row] });
+    interaction.reply({ content: "Help", embeds: [embed], components: [row] });
 }
 
 export const command_string = new SlashCommandBuilder().setName("help").setDescription("Help and support").toJSON();
