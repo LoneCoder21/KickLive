@@ -8,3 +8,7 @@ export const STREAMER_URL = (streamer: string) => {
 export const API_V2_URL = (streamer: string) => {
     return `${DOMAIN_URL}/api/v2/channels/${streamer}`;
 };
+
+export const CHATROOM_V2_URL = (streamer: string) => {
+    return `${API_V2_URL(streamer)}/chatroom`;
+};
