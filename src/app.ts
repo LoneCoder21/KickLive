@@ -5,7 +5,7 @@ import { Livestream } from "./Livestream.js";
 import { REST, Routes, Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
 import { headers } from "./constants/headers.js";
 
-import { help, list, watch, unwatch } from "./commands/utility.js";
+import { help, list, watch, unwatch, sample } from "./commands/utility.js";
 
 async function getToken(name: string): string | undefined {
     try {
@@ -56,7 +56,6 @@ async function createClient() {
 
     client.on(Events.InteractionCreate, (interaction: BaseInteraction) => {
         if (!interaction.isChatInputCommand()) return;
-        console.log(interaction.commandName);
         switch (interaction.commandName) {
             case "watch":
                 watch.execute(interaction);
@@ -69,6 +68,9 @@ async function createClient() {
                 break;
             case "help":
                 help.execute(interaction);
+                break;
+            case "sample":
+                sample.execute(interaction);
                 break;
         }
     });
@@ -100,7 +102,13 @@ const rest = new REST().setToken(discord_token);
 (async () => {
     try {
         const data = await rest.put(Routes.applicationGuildCommands(client_id, guildId), {
-            body: [help.command_string, list.command_string, watch.command_string, unwatch.command_string]
+            body: [
+                help.command_string,
+                list.command_string,
+                watch.command_string,
+                unwatch.command_string,
+                sample.command_string
+            ]
         });
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);

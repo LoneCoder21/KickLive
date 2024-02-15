@@ -25,7 +25,8 @@ export function execute(interaction: ChatInputCommandInteraction) {
             { name: inlineCode("/help"), value: "Shows help and all commands" },
             { name: inlineCode("/watch - [name]"), value: "Watches a new streamer for live events" },
             { name: inlineCode("/unwatch - [name]"), value: "Stop watching the streamer for live events" },
-            { name: inlineCode("/list"), value: "List all streamers that are being watched" }
+            { name: inlineCode("/list"), value: "List all streamers that are being watched" },
+            { name: inlineCode("/sample"), value: "Test a sample live notification" }
         );
 
     const github = new ButtonBuilder()
