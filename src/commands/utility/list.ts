@@ -7,6 +7,7 @@ import {
     ChatInputCommandInteraction,
     SlashCommandBuilder
 } from "discord.js";
+import { STREAMER_URL } from "../../constants/url.js";
 
 const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl", "sliker"];
 
@@ -14,10 +15,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const buttons = [];
 
     for (const streamer of list) {
-        const button = new ButtonBuilder()
-            .setLabel(streamer)
-            .setURL(`https://kick.com/${streamer}`)
-            .setStyle(ButtonStyle.Link);
+        const button = new ButtonBuilder().setLabel(streamer).setURL(STREAMER_URL(streamer)).setStyle(ButtonStyle.Link);
         buttons.push(button);
     }
 

@@ -9,39 +9,36 @@ import {
     SlashCommandBuilder
 } from "discord.js";
 import { User } from "../../types/User.js";
-import { headers } from "../../constants/headers.js";
+import { HEADERS } from "../../constants/headers.js";
 import axios from "axios";
+import { STREAMER_URL, API_V2_URL, PROFILE_PIC_URL, GITHUB_URL } from "../../constants/url.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
 
-    const res = await axios.get(`https://kick.com/api/v2/channels/${streamer}`, {
-        headers: headers
+    const res = await axios.get(API_V2_URL(streamer), {
+        headers: HEADERS
     });
     const user: User = res.data.user;
-    console.log(res.data);
+
     const embed = new EmbedBuilder()
         .setColor(0x00ff7f)
-        .setAuthor({ name: streamer, iconURL: user.profile_pic, url: `https://kick.com/${streamer}` })
+        .setAuthor({ name: streamer, iconURL: user.profile_pic, url: STREAMER_URL(streamer) })
         .setTitle("Some title")
-        .setURL(`https://kick.com/${streamer}`)
+        .setURL(STREAMER_URL(streamer))
         .addFields({ name: "Category", value: "Some category here" })
         .setImage(user.profile_pic)
         .setFooter({
             text: "time",
-            iconURL: "https://dbxmjjzl5pc1g.cloudfront.net/6a985671-90ef-4d3f-a249-4451800dc6a1/Kick-Favicon152x152.png"
+            iconURL: PROFILE_PIC_URL
         });
 
     const streambutton = new ButtonBuilder()
         .setLabel("Watch Stream")
-        .setURL(`https://kick.com/${streamer}`)
+        .setURL(STREAMER_URL(streamer))
         .setStyle(ButtonStyle.Link);
 
-    const github = new ButtonBuilder()
-        .setLabel("GitHub")
-        .setURL("https://github.com/LoneCoder21/KickLive")
-        .setStyle(ButtonStyle.Link);
-
+    const github = new ButtonBuilder().setLabel("GitHub").setURL(GITHUB_URL).setStyle(ButtonStyle.Link);
     const row = new ActionRowBuilder().addComponents(streambutton, github);
 
     interaction.reply({ content: `@everyone ${streamer} is now live on Kick!`, embeds: [embed], components: [row] });

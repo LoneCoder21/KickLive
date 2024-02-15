@@ -3,14 +3,15 @@ import axios from "axios";
 import "dotenv/config";
 import { Livestream } from "./Livestream.js";
 import { REST, Routes, Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
-import { headers } from "./constants/headers.js";
+import { HEADERS } from "./constants/headers.js";
 
 import { help, list, watch, unwatch, sample } from "./commands/utility.js";
+import { STREAMER_URL } from "./constants/url.js";
 
 async function getToken(name: string): string | undefined {
     try {
-        const res = await axios.get(`https://kick.com/${name}`, {
-            headers: headers
+        const res = await axios.get(STREAMER_URL(name), {
+            headers: HEADERS
         });
 
         for (const f of res.headers["set-cookie"]) {
@@ -33,7 +34,7 @@ async function getChatRoomId(name: string): number | undefined {
 
     try {
         const res = await axios.get(`https://kick.com/api/v2/channels/${name}/chatroom`, {
-            headers: { ...headers, Authorization: `Bearer ${token}` }
+            headers: { ...HEADERS, Authorization: `Bearer ${token}` }
         });
         return res.data.id;
     } catch (err) {
