@@ -24,7 +24,8 @@ export function execute(interaction: ChatInputCommandInteraction) {
             { name: inlineCode("/watch - [name]"), value: "Watches a new streamer for live events" },
             { name: inlineCode("/unwatch - [name]"), value: "Stop watching the streamer for live events" },
             { name: inlineCode("/sample - [name]"), value: "Test a sample live notification" },
-            { name: inlineCode("/list"), value: "List all streamers that are being watched" }
+            { name: inlineCode("/list"), value: "List all streamers that are being watched" },
+            { name: inlineCode("/reset"), value: "Reset the streamer list to nothing" }
         );
 
     const github = new ButtonBuilder().setLabel("GitHub").setURL(GITHUB_URL).setStyle(ButtonStyle.Link);

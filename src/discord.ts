@@ -1,6 +1,6 @@
 import { REST, Routes, Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
 import "dotenv/config";
-import { help, list, watch, unwatch, sample } from "./commands/utility.js";
+import { help, list, watch, unwatch, sample, reset } from "./commands/utility.js";
 
 const client_id = process.env.clientid;
 const discord_token = process.env.token;
@@ -16,7 +16,8 @@ export async function loadSlashCommands() {
                 list.command_string,
                 watch.command_string,
                 unwatch.command_string,
-                sample.command_string
+                sample.command_string,
+                reset.command_string
             ]
         });
 
@@ -49,6 +50,9 @@ export async function createClient() {
                 break;
             case "sample":
                 sample.execute(interaction);
+                break;
+            case "reset":
+                reset.execute(interaction);
                 break;
         }
     });

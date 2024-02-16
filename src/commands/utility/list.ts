@@ -37,7 +37,8 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         rows.push(row);
     }
 
-    interaction.reply({ components: rows });
+    if (list.length) interaction.reply({ components: rows });
+    else interaction.reply("No streamers are being watched! 😞");
 }
 
 export const command_string = new SlashCommandBuilder()
