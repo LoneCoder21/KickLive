@@ -12,6 +12,7 @@ import { User } from "../../types/User.js";
 import { HEADERS } from "../../constants/headers.js";
 import axios from "axios";
 import { API_V2_URL, GITHUB_URL, STREAMER_URL } from "../../constants/url.js";
+import { getDatabase } from "../../db/db.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
@@ -29,6 +30,16 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     const github = new ButtonBuilder().setLabel("GitHub").setURL(GITHUB_URL).setStyle(ButtonStyle.Link);
     const row = new ActionRowBuilder().addComponents(github);
+
+    const table = await getDatabase();
+
+    await table.destroy({
+        where: {
+            guildID: interaction.guildId,
+            channelID: interaction.channelId,
+            streamer: streamer
+        }
+    });
 
     interaction.reply({ embeds: [embed], components: [row] });
 }

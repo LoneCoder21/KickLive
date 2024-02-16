@@ -8,7 +8,7 @@
         "dist/*"
     ],
     "scripts": {
-        "build": "esbuild src/app.ts --bundle --format=esm --platform=node --outdir=dist --external:discord.js --external:pusher-js --external:axios --external:dotenv/config",
+        "build": "esbuild src/app.ts --bundle --format=esm --platform=node --outdir=dist --external:discord.js --external:pusher-js --external:axios --external:dotenv/config --external:sequelize",
         "prerestart": "npm run build",
         "start": "node dist/app.js",
         "format": "prettier --write \"src/**/*.ts\"",
@@ -37,7 +37,11 @@
         "axios": "^1.6.7",
         "discord.js": "^14.14.1",
         "dotenv": "^16.4.3",
-        "pusher-js": "^8.4.0-rc2"
+        "pusher-js": "^8.4.0-rc2",
+        "reflect-metadata": "^0.2.1",
+        "sequelize": "^6.37.0",
+        "sequelize-typescript": "^2.1.6",
+        "sqlite3": "^5.1.7"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.0.1",

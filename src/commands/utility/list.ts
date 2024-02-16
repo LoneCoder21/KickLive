@@ -8,12 +8,21 @@ import {
     SlashCommandBuilder
 } from "discord.js";
 import { STREAMER_URL } from "../../constants/url.js";
-
-const list = ["xqc", "destiny", "roshtein", "gmhikaru", "pgl", "sliker"];
+import { getDatabase } from "../../db/db.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
-    const buttons = [];
+    const table = await getDatabase();
 
+    const streamers = await table.findAll({
+        where: {
+            guildID: interaction.guildId,
+            channelID: interaction.channelId
+        }
+    });
+
+    const list = streamers.map((streamer) => streamer.streamer);
+
+    const buttons = [];
     for (const streamer of list) {
         const button = new ButtonBuilder().setLabel(streamer).setURL(STREAMER_URL(streamer)).setStyle(ButtonStyle.Link);
         buttons.push(button);
