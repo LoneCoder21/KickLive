@@ -33,11 +33,21 @@ export async function execute(interaction: ChatInputCommandInteraction) {
 
     const table = await getDatabase();
 
-    await table.upsert({
-        guildID: interaction.guildId,
-        channelID: interaction.channelId,
-        streamer: streamer
+    const data = await table.findOne({
+        where: {
+            guildID: interaction.guildId,
+            channelID: interaction.channelId,
+            streamer: streamer
+        }
     });
+
+    if (!data) {
+        await table.create({
+            guildID: interaction.guildId,
+            channelID: interaction.channelId,
+            streamer: streamer
+        });
+    }
 
     interaction.reply({ embeds: [embed], components: [row] });
 }
