@@ -1,15 +1,14 @@
 import Pusher from "pusher-js";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { HEADERS } from "./constants/headers.js";
 import { Livestream } from "./types/Livestream.js";
 import { getDiscordClient } from "./discord.js";
 import { ButtonStyle, ButtonBuilder, EmbedBuilder, ActionRowBuilder } from "discord.js";
 import { API_V2_URL, STREAMER_URL, PROFILE_PIC_URL, GITHUB_URL } from "./constants/url.js";
 import { getDatabase } from "./db/db.js";
-import { User } from "./types/User.js";
 
 const watchstreamers = new Set<string>();
-const pusher = new Pusher("eb1d5f283081a78b932c", {
+const pusher: Pusher.default = new Pusher("eb1d5f283081a78b932c", {
     cluster: "us2"
 });
 
@@ -20,7 +19,7 @@ export async function subscribePusher(name: string) {
         const res = await axios.get(API_V2_URL(name), {
             headers: HEADERS
         });
-        const channelid = res.data.id;
+        const channelid: string = res.data.id;
 
         const channel = pusher.subscribe(`channel.${channelid}`);
 
@@ -39,9 +38,9 @@ export async function subscribePusher(name: string) {
                 headers: HEADERS
             });
             console.log(res.data);
-            const user: User = res.data.user;
-            const thumbnail = res.data.livestream.thumbnail.url;
-            const categories = res.data.recent_categories;
+            const profile_pic: string = res.data.user.profile_pic;
+            const thumbnail: string = res.data.livestream.thumbnail.url;
+            const category: string = res.data.recent_categories[0].name;
 
             const table = await getDatabase();
 
@@ -53,11 +52,11 @@ export async function subscribePusher(name: string) {
 
             const embed = new EmbedBuilder()
                 .setColor(0x00ff7f)
-                .setAuthor({ name: name, iconURL: user.profile_pic, url: STREAMER_URL(name) })
+                .setAuthor({ name: name, iconURL: profile_pic, url: STREAMER_URL(name) })
                 .setTitle(data.session_title)
                 .setURL(STREAMER_URL(name))
-                .addFields({ name: "Category", value: categories[0].name })
-                .setImage(user.profile_pic)
+                .addFields({ name: "Category", value: category })
+                .setImage(thumbnail)
                 .setFooter({
                     text: data.created_at,
                     iconURL: PROFILE_PIC_URL

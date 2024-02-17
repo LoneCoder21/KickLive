@@ -28,9 +28,9 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             headers: HEADERS
         });
 
-        const profile_pic = res.data.user.profile_pic;
-        const category = res.data.recent_categories[0].name;
-        const bio = res.data.user.bio;
+        const profile_pic: string = res.data.user.profile_pic;
+        const category: string = res.data.recent_categories[0].name;
+        const bio: string = res.data.user.bio;
 
         const embed = new EmbedBuilder()
             .setColor(0x00ff7f)

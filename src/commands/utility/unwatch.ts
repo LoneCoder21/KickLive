@@ -23,7 +23,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
         const res = await axios.get(API_V2_URL(streamer), {
             headers: HEADERS
         });
-        const profile_pic = res.data.user.profile_pic;
+        const profile_pic: string = res.data.user.profile_pic;
         const embed = new EmbedBuilder()
             .setColor(0x00ff7f)
             .setAuthor({ name: streamer, iconURL: profile_pic, url: STREAMER_URL(streamer) })
