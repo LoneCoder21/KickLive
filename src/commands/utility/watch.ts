@@ -13,6 +13,7 @@ import { HEADERS } from "../../constants/headers.js";
 import axios from "axios";
 import { GITHUB_URL, STREAMER_URL, API_V2_URL } from "../../constants/url.js";
 import { getDatabase } from "../../db/db.js";
+import { subscribePusher } from "../../pusher.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
@@ -48,6 +49,8 @@ export async function execute(interaction: ChatInputCommandInteraction) {
             streamer: streamer
         });
     }
+
+    subscribePusher(streamer);
 
     interaction.reply({ embeds: [embed], components: [row] });
 }

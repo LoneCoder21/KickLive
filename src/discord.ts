@@ -1,39 +1,27 @@
-import { REST, Routes, Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
+import { Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
 import "dotenv/config";
 import { help, list, watch, unwatch, sample, reset } from "./commands/utility.js";
+import { subscribePusher } from "./pusher.js";
+import { getDatabase } from "./db/db.js";
 
-const client_id = process.env.clientid;
-const discord_token = process.env.token;
-const guildId = "586280213680357386";
+const discord_token = process.env.discordtoken;
 
-export async function loadSlashCommands() {
-    const rest = new REST().setToken(discord_token);
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+await client.login(discord_token);
 
-    try {
-        const data = await rest.put(Routes.applicationGuildCommands(client_id, guildId), {
-            body: [
-                help.command_string,
-                list.command_string,
-                watch.command_string,
-                unwatch.command_string,
-                sample.command_string,
-                reset.command_string
-            ]
-        });
+export async function setupDiscordEvents() {
+    await client.once("ready", async () => {
+        const table = await getDatabase();
 
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-    } catch (error) {
-        console.error(error);
-    }
-}
+        const streamers = await table.findAll();
+        const list = streamers.map((streamer) => streamer.streamer);
 
-export async function createClient() {
-    const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+        for (const name of list) {
+            subscribePusher(name);
+        }
+    });
 
-    await client.login(discord_token);
-    await client.once("ready", () => {});
-
-    client.on(Events.InteractionCreate, (interaction: BaseInteraction) => {
+    await client.on(Events.InteractionCreate, (interaction: BaseInteraction) => {
         if (!interaction.isChatInputCommand()) return;
         switch (interaction.commandName) {
             case "watch":
@@ -56,6 +44,8 @@ export async function createClient() {
                 break;
         }
     });
+}
 
+export async function getDiscordClient() {
     return client;
 }

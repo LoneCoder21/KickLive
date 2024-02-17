@@ -5,7 +5,10 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const table = await getDatabase();
 
     await table.destroy({
-        truncate: true
+        where: {
+            guildID: interaction.guildId,
+            channelID: interaction.channelId
+        }
     });
 
     interaction.reply("Removed all streamers from this channel! 😊");
