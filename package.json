@@ -33,18 +33,18 @@
     },
     "homepage": "https://github.com/LoneCoder21/KickLive#readme",
     "dependencies": {
-        "@types/node": "^20.11.17",
         "axios": "^1.6.7",
         "discord.js": "^14.14.1",
         "dotenv": "^16.4.3",
         "pusher-js": "^8.4.0-rc2",
-        "reflect-metadata": "^0.2.1",
         "sequelize": "^6.37.0",
         "sequelize-typescript": "^2.1.6",
         "sqlite3": "^5.1.7"
     },
     "devDependencies": {
         "@eslint/eslintrc": "^3.0.1",
+        "@types/node": "^20.11.19",
+        "@types/validator": "^13.11.9",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
         "esbuild": "0.20.0",

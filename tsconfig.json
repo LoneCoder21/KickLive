@@ -8,6 +8,8 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "module": "NodeNext",
         "isolatedModules": true,
         "outDir": "dist/",

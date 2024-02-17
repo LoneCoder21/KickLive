@@ -21,6 +21,7 @@ export async function subscribePusher(name: string) {
             headers: HEADERS
         });
         const channelid = res.data.id;
+
         const channel = pusher.subscribe(`channel.${channelid}`);
 
         pusher.connection.bind("connected", function () {
@@ -31,8 +32,7 @@ export async function subscribePusher(name: string) {
         });
 
         channel.bind("App\\Events\\StreamerIsLive", async (data: Livestream) => {
-            console.log(data);
-            const client = getDiscordClient();
+            const client = await getDiscordClient();
             if (!client.isReady) return;
 
             const res = await axios.get(API_V2_URL(name), {

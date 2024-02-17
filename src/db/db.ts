@@ -1,6 +1,18 @@
 import Sequelize from "sequelize";
 
-let streamers_table = null;
+// import { Table, Column, Model } from "sequelize-typescript";
+
+// @Table
+// class Streamer extends Model {
+//     @Column
+//     guildID: string;
+
+//     @Column
+//     channelID: string;
+
+//     @Column
+//     streamer: string;
+// }
 
 const sequelize = new Sequelize({
     dialect: "sqlite",
@@ -15,7 +27,7 @@ try {
     console.error("Unable to connect to the database:", error);
 }
 
-streamers_table = sequelize.define("streamers", {
+const streamers_table = sequelize.define("streamers", {
     guildID: {
         type: Sequelize.STRING,
         allowNull: false
