@@ -1,7 +1,7 @@
 import Pusher from "pusher-js";
 import axios from "axios";
 import { HEADERS } from "./constants/headers.js";
-import { Livestream } from "./Livestream.js";
+import { Livestream } from "./types/Livestream.js";
 import { getDiscordClient } from "./discord.js";
 import { ButtonStyle, ButtonBuilder, EmbedBuilder, ActionRowBuilder } from "discord.js";
 import { API_V2_URL, STREAMER_URL, PROFILE_PIC_URL, GITHUB_URL } from "./constants/url.js";
