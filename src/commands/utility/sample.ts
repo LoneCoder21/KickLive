@@ -8,30 +8,12 @@ import {
     ChatInputCommandInteraction,
     SlashCommandBuilder
 } from "discord.js";
-import { User } from "../../types/User.js";
 import { HEADERS } from "../../constants/headers.js";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { STREAMER_URL, API_V2_URL, PROFILE_PIC_URL, GITHUB_URL } from "../../constants/url.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
-
-    const res = await axios.get(API_V2_URL(streamer), {
-        headers: HEADERS
-    });
-    const user: User = res.data.user;
-
-    const embed = new EmbedBuilder()
-        .setColor(0x00ff7f)
-        .setAuthor({ name: streamer, iconURL: user.profile_pic, url: STREAMER_URL(streamer) })
-        .setTitle("Some title")
-        .setURL(STREAMER_URL(streamer))
-        .addFields({ name: "Category", value: "Some category here" })
-        .setImage(user.profile_pic)
-        .setFooter({
-            text: "time",
-            iconURL: PROFILE_PIC_URL
-        });
 
     const streambutton = new ButtonBuilder()
         .setLabel("Watch Stream")
@@ -41,7 +23,44 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const github = new ButtonBuilder().setLabel("GitHub").setURL(GITHUB_URL).setStyle(ButtonStyle.Link);
     const row = new ActionRowBuilder().addComponents(streambutton, github);
 
-    interaction.reply({ content: `@everyone ${streamer} is now live on Kick!`, embeds: [embed], components: [row] });
+    try {
+        const res = await axios.get(API_V2_URL(streamer), {
+            headers: HEADERS
+        });
+
+        const profile_pic = res.data.user.profile_pic;
+        const category = res.data.recent_categories[0].name;
+        const bio = res.data.user.bio;
+
+        const embed = new EmbedBuilder()
+            .setColor(0x00ff7f)
+            .setAuthor({ name: streamer, iconURL: profile_pic, url: STREAMER_URL(streamer) })
+            .setTitle(bio)
+            .setURL(STREAMER_URL(streamer))
+            .addFields({ name: "Category", value: category })
+            .setImage(profile_pic)
+            .setFooter({
+                text: "time",
+                iconURL: PROFILE_PIC_URL
+            });
+
+        interaction.reply({
+            content: `@everyone ${streamer} is now live on Kick!`,
+            embeds: [embed],
+            components: [row]
+        });
+    } catch (error) {
+        console.log(error);
+
+        if (error instanceof AxiosError) {
+            interaction.reply(`Streamer not found! 😞`);
+        } else {
+            interaction.reply({
+                content: `@everyone ${streamer} is now live on Kick!`,
+                components: [row]
+            });
+        }
+    }
 }
 
 export const command_string = new SlashCommandBuilder()
