@@ -31,3 +31,7 @@ jobs:
             - name: Build with esbuild
               uses: actions/setup-node@v3
             - run: npm run build
+
+            - name: Run server
+              uses: actions/setup-node@v3
+            - run: npm start
