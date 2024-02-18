@@ -5,8 +5,9 @@ import { subscribePusher } from "./pusher.js";
 import { getDatabase } from "./db/db.js";
 
 const discord_token = process.env.discordtoken;
-
+console.log(discord_token);
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+
 await client.login(discord_token);
 
 export async function setupDiscordEvents() {

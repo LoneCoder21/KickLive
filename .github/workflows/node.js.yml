@@ -26,7 +26,7 @@ jobs:
             - name: Create .env with secrets
               uses: SpicyPizza/create-envfile@v2.0.2
               with:
-                  envkey_FAKETOKEN: ${{ vars.FAKETOKEN }}
+                  envkey_DISCORDTOKEN: ${{ vars.FAKETOKEN }}
                   file_name: .env
 
             - name: CAT
