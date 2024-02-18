@@ -30,8 +30,11 @@ jobs:
                   envkey_CLIENTID: ${{ vars.FAKETOKEN }}
                   file_name: .env
 
-            - name: CAT
-              run: cat .env
+            - name: Copy .env to dist
+              uses: canastro/copy-file-action@master
+              with:
+                  source: "dist/.env"
+                  target: ".env"
 
             - name: Run server
               run: npm start
