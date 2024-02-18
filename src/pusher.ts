@@ -4,7 +4,7 @@ import { HEADERS } from "./constants/headers.js";
 import { Livestream } from "./types/Livestream.js";
 import { getDiscordClient } from "./discord.js";
 import { ButtonStyle, ButtonBuilder, EmbedBuilder, ActionRowBuilder } from "discord.js";
-import { API_V2_URL, STREAMER_URL, PROFILE_PIC_URL, GITHUB_URL } from "./constants/url.js";
+import { API_V1_URL, API_V2_URL, STREAMER_URL, PROFILE_PIC_URL, GITHUB_URL } from "./constants/url.js";
 import { getDatabase } from "./db/db.js";
 
 const watchstreamers = new Set<string>();
@@ -34,13 +34,19 @@ export async function subscribePusher(name: string) {
             const client = await getDiscordClient();
             if (!client.isReady) return;
 
-            const res = await axios.get(API_V2_URL(name), {
+            const res = await axios.get(API_V1_URL(name), {
                 headers: HEADERS
             });
-            console.log(res.data);
             const profile_pic: string = res.data.user.profile_pic;
-            const thumbnail: string = res.data.livestream.thumbnail.url;
+            let thumbnail: string = res.data.previous_livestreams[0].thumbnail.src;
             const category: string = res.data.recent_categories[0].name;
+
+            if (res.data.livestream.thumbnail.url) {
+                thumbnail = res.data.livestream.thumbnail.url;
+                console.log("new thumbnail");
+            } else {
+                console.log("old thumbnail");
+            }
 
             const table = await getDatabase();
 

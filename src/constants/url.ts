@@ -5,6 +5,9 @@ export const DOMAIN_URL = "https://kick.com";
 export const STREAMER_URL = (streamer: string) => {
     return `${DOMAIN_URL}/${streamer}`;
 };
+export const API_V1_URL = (streamer: string) => {
+    return `${DOMAIN_URL}/api/v1/channels/${streamer}`;
+};
 export const API_V2_URL = (streamer: string) => {
     return `${DOMAIN_URL}/api/v2/channels/${streamer}`;
 };
