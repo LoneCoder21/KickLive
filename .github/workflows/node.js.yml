@@ -8,6 +8,7 @@ on:
         branches: ["main"]
     pull_request:
         branches: ["main"]
+    workflow_dispatch:
 
 jobs:
     build:
@@ -33,11 +34,12 @@ jobs:
             - run: npm run build
 
             - name: Create .env with secrets
-              uses: actions/setup-node@v3
-            - run: |
-                  touch .env
-                  echo CLIENTID = ${{ secrets.CLIENTID }} >> .env
-                  echo DISCORDTOKEN = ${{ secrets.DISCORDTOKEN }} >> .env
+              uses: SpicyPizza/create-envfile@v2.0.2
+              with:
+                  envkey_DEBUG: false
+                  envkey_CLIENTID: ${{ secrets.CLIENTID }}
+                  envkey_DISCORDTOKEN: ${{ secrets.DISCORDTOKEN }}
+                  file_name: .env
 
             - name: Run server
               uses: actions/setup-node@v3
