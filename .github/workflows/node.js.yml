@@ -26,10 +26,12 @@ jobs:
             - name: Create .env with secrets
               uses: SpicyPizza/create-envfile@v2.0.2
               with:
-                  envkey_DEBUG: false
                   envkey_CLIENTID: ${{ secrets.CLIENTID }}
                   envkey_DISCORDTOKEN: ${{ secrets.DISCORDTOKEN }}
                   file_name: .env
+
+            - name: CAT
+              run: cat .env
 
             - name: Run server
               run: npm start
