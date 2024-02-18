@@ -31,10 +31,7 @@ jobs:
                   file_name: .env
 
             - name: Copy .env to dist
-              uses: canastro/copy-file-action@master
-              with:
-                  source: ".env"
-                  target: "dist/.env"
+              run: cp .env dist/.env
 
             - name: Run server
               run: npm start
