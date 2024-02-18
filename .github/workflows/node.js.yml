@@ -32,6 +32,13 @@ jobs:
               uses: actions/setup-node@v3
             - run: npm run build
 
+            - name: Create .env with secrets
+              uses: actions/setup-node@v3
+            - run: |
+                  touch .env
+                  echo DISCORDTOKEN = ${{ secrets.DISCORDTOKEN }} >> .env
+                  echo CLIENTID = ${{ secrets.CLIENTID }} >> .env
+
             - name: Run server
               uses: actions/setup-node@v3
             - run: npm start
