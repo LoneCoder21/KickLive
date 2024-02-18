@@ -35,3 +35,6 @@ jobs:
 
             - name: Run server
               run: npm start
+              env:
+                  DISCORDTOKEN: ${{ vars.FAKETOKEN }}
+                  CLIENTID: ${{ vars.FAKETOKEN }}
