@@ -8,7 +8,7 @@
         "dist/*"
     ],
     "scripts": {
-        "build": "esbuild src/app.ts --bundle --format=esm --platform=node --outdir=dist --external:discord.js --external:pusher-js --external:axios --external:dotenv/config --external:sequelize",
+        "build": "esbuild src/app.ts --bundle --format=esm --platform=node --outdir=dist --external:discord.js --external:pusher-js --external:axios --external:dotenv --external:sequelize",
         "prerestart": "npm run build",
         "start": "node dist/app.js",
         "format": "prettier --write \"src/**/*.ts\"",

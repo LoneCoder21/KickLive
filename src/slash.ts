@@ -1,7 +1,8 @@
 import { REST, Routes } from "discord.js";
-import "dotenv/config";
+import dotenv from "dotenv";
 import { help, list, watch, unwatch, sample, reset } from "./commands/utility.js";
 
+dotenv.config();
 const client_id = process.env.clientid;
 const discord_token = process.env.discordtoken;
 const guildId = "586280213680357386";

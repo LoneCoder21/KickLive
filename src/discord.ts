@@ -1,9 +1,10 @@
 import { Client, GatewayIntentBits, Events, BaseInteraction } from "discord.js";
-import "dotenv/config";
+import dotenv from "dotenv";
 import { help, list, watch, unwatch, sample, reset } from "./commands/utility.js";
 import { subscribePusher } from "./pusher.js";
 import { getDatabase } from "./db/db.js";
 
+dotenv.config();
 const discord_token = process.env.discordtoken;
 console.log(discord_token);
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
