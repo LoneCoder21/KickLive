@@ -5,7 +5,7 @@ import { subscribePusher } from "./pusher.js";
 import { getDatabase } from "./db/db.js";
 
 dotenv.config();
-const discord_token = process.env.discordtoken;
+const discord_token = process.env.DISCORDTOKEN;
 console.log(discord_token);
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });

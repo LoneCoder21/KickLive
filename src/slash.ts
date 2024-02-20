@@ -3,9 +3,11 @@ import dotenv from "dotenv";
 import { help, list, watch, unwatch, sample, reset } from "./commands/utility.js";
 
 dotenv.config();
-const client_id = process.env.clientid;
-const discord_token = process.env.discordtoken;
+const client_id = process.env.CLIENTID;
+const discord_token = process.env.DISCORDTOKEN;
 const guildId = "586280213680357386";
+
+console.log(client_id, discord_token);
 
 export async function registerSlashCommands() {
     const rest = new REST().setToken(discord_token);
