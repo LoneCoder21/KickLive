@@ -5,6 +5,7 @@ on:
         branches: [main]
     pull_request:
         branches: [main]
+    workflow_dispatch:
 
 jobs:
     build:
@@ -14,18 +15,16 @@ jobs:
             matrix:
                 node-version: [21.x]
 
+        env:
+            DISCORDTOKEN: ${{ vars.FAKETOKEN }}
+            CLIENTID: ${{ vars.FAKETOKEN }}
+
         steps:
             - uses: actions/checkout@v3
             - name: Use Node.js ${{ matrix.node-version }}
               uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node-version }}
-
-            - name: Create .env file
-              uses: SpicyPizza/create-envfile@v2.0.2
-              with:
-                  envkey_DISCORDTOKEN: ${{ vars.FAKETOKEN }}
-                  envkey_CLIENTID: ${{ vars.FAKETOKEN }}
 
             - run: npm install
             - run: npm run build
