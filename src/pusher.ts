@@ -32,12 +32,12 @@ export async function subscribePusher(name: string) {
 
         channel.bind("App\\Events\\StreamerIsLive", async (data: { livestream: Livestream }) => {
             const client = await getDiscordClient();
-            console.log("client begin");
             if (!client.isReady) return;
-            console.log("client ready");
+
             const res = await axios.get(API_V1_URL(name), {
                 headers: HEADERS
             });
+
             const profile_pic: string = res.data.user.profile_pic;
             let thumbnail: string = res.data.previous_livestreams[0].thumbnail.src;
             const category: string = res.data.recent_categories[0].name;
