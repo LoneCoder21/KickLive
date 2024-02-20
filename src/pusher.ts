@@ -30,22 +30,22 @@ export async function subscribePusher(name: string) {
             console.log(err);
         });
 
-        channel.bind("App\\Events\\StreamerIsLive", async (data: Livestream) => {
+        channel.bind("App\\Events\\StreamerIsLive", async (data: { livestream: Livestream }) => {
             const client = await getDiscordClient();
+            console.log("client begin");
             if (!client.isReady) return;
-
+            console.log("client ready");
             const res = await axios.get(API_V1_URL(name), {
                 headers: HEADERS
             });
             const profile_pic: string = res.data.user.profile_pic;
             let thumbnail: string = res.data.previous_livestreams[0].thumbnail.src;
             const category: string = res.data.recent_categories[0].name;
+            const title: string = data.livestream.session_title;
+            const created_at: string = data.livestream.created_at;
 
             if (res.data.livestream.thumbnail.url) {
                 thumbnail = res.data.livestream.thumbnail.url;
-                console.log("new thumbnail");
-            } else {
-                console.log("old thumbnail");
             }
 
             const table = await getDatabase();
@@ -59,12 +59,12 @@ export async function subscribePusher(name: string) {
             const embed = new EmbedBuilder()
                 .setColor(0x00ff7f)
                 .setAuthor({ name: name, iconURL: profile_pic, url: STREAMER_URL(name) })
-                .setTitle(data.session_title)
+                .setTitle(title)
                 .setURL(STREAMER_URL(name))
                 .addFields({ name: "Category", value: category })
                 .setImage(thumbnail)
                 .setFooter({
-                    text: data.created_at,
+                    text: created_at,
                     iconURL: PROFILE_PIC_URL
                 });
 
