@@ -8,9 +8,9 @@ import {
     ChatInputCommandInteraction,
     SlashCommandBuilder
 } from "discord.js";
-import { HEADERS } from "../../constants/headers.js";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { STREAMER_URL, API_V1_URL, PROFILE_PIC_URL, GITHUB_URL } from "../../constants/url.js";
+import { GET } from "../../axios.js";
 
 export async function execute(interaction: ChatInputCommandInteraction) {
     const streamer = interaction.options.getString("streamer")!;
@@ -24,9 +24,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const row = new ActionRowBuilder().addComponents(streambutton, github);
 
     try {
-        const res = await axios.get(API_V1_URL(streamer), {
-            headers: HEADERS
-        });
+        const res = await GET(API_V1_URL(streamer));
 
         const profile_pic: string = res.data.user.profile_pic;
         const category: string = res.data.recent_categories[0].name;

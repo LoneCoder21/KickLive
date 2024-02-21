@@ -8,11 +8,11 @@ import {
     ChatInputCommandInteraction,
     SlashCommandBuilder
 } from "discord.js";
-import { HEADERS } from "../../constants/headers.js";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { GITHUB_URL, STREAMER_URL, API_V2_URL } from "../../constants/url.js";
 import { getDatabase } from "../../db/db.js";
 import { subscribePusher } from "../../pusher.js";
+import { GET } from "../../axios.js";
 
 async function addPerson(interaction: ChatInputCommandInteraction, streamer: string) {
     const table = await getDatabase();
@@ -43,9 +43,7 @@ export async function execute(interaction: ChatInputCommandInteraction) {
     const row = new ActionRowBuilder().addComponents(github);
 
     try {
-        const res = await axios.get(API_V2_URL(streamer), {
-            headers: HEADERS
-        });
+        const res = await GET(API_V2_URL(streamer));
         const profile_pic: string = res.data.user.profile_pic;
         const embed = new EmbedBuilder()
             .setColor(0x00ff7f)
